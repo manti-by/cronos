@@ -1,0 +1,16 @@
+# PyCharm files
+.idea/
+
+# PyEnv
+.python-version
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+
+# Data and log files
+db.sqlite
+app.log

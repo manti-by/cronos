@@ -3,8 +3,11 @@
 define SENSORS_MIGRATION_SCRIPT
 CREATE TABLE IF NOT EXISTS data (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    sensor TEXT,
-    value PYDECIMAL,
+    t1 PYDECIMAL,
+    t2 PYDECIMAL,
+    t3 PYDECIMAL,
+    t4 PYDECIMAL,
+    t5 PYDECIMAL,
     datetime DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 endef
@@ -19,3 +22,6 @@ check:
 
 update-sensors:
 	./main.py --action=update-sensors
+
+update-display:
+	./main.py --action=update-display

@@ -2,15 +2,18 @@
 import argparse
 from logging import config
 
-from config import LOGGING
+from settings import LOGGING
+
+config.dictConfig(LOGGING)
 
 parser = argparse.ArgumentParser(description="Deploy commands")
 parser.add_argument(
-    "--action", type=str, choices=("update-sensors",), help="Action to run"
+    "--action",
+    type=str,
+    choices=("update-sensors", "update-display"),
+    help="Action to run",
 )
 args = parser.parse_args()
-
-config.dictConfig(LOGGING)
 
 
 if __name__ == "__main__":
@@ -19,4 +22,11 @@ if __name__ == "__main__":
 
         update_sensors()
         exit(0)
+
+    if args.action == "update-display":
+        from library.services import update_display
+
+        update_display()
+        exit(0)
+
     parser.print_help()

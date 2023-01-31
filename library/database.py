@@ -17,24 +17,19 @@ class Database:
             column[0]: row[index] for index, column in enumerate(cursor.description)
         }
 
-    def insert(self, sensor: str, value: Decimal):
+    def insert(self, t1: Decimal, t2: Decimal, t3: Decimal, t4: Decimal, t5: Decimal):
         with sqlite3.connect(self.db_path) as connection:
             cursor = connection.cursor()
             cursor.execute(
-                "INSERT INTO data (sensor, value) VALUES (?, ?)",
-                (sensor, value),
+                "INSERT INTO data (t1, t2, t3, t4, t5) VALUES (?, ?, ?, ?, ?)",
+                (t1, t2, t3, t4, t5),
             )
             connection.commit()
 
-    def select(self, limit: int = 5) -> list[dict]:
+    def latest(self) -> dict:
         with sqlite3.connect(self.db_path) as session:
             session.row_factory = self.dict_factory
             cursor = session.cursor()
-            cursor.execute(
-                "SELECT sensor, value, datetime "
-                "FROM data ORDER BY datetime DESC "
-                "LIMIT ?",
-                (limit,),
-            )
+            cursor.execute("SELECT * FROM data ORDER BY datetime DESC")
             session.commit()
-            return cursor.fetchall()
+            return cursor.fetchone()
